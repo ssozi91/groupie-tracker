@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <title>Groupie Tracker</title>
+</head>
+<body>
+  <a href="/"><h1>Groupie Tracker</h1></a>
+<form action="/" method="get" class="search-form">
+  <input type="text" name="search" placeholder="Search for an artist...">
+  <input type="submit" value="Search">
+</form>
+<div class="container">
+  {{range .Artists}}
+  <a href="/artists/{{.Id}}" class="card-link">
+    <div class="card">
+      <div class="card-image">
+        <img src="{{.Image}}" alt="{{.Name}}">
+      </div>
+      <div class="card-content">
+        <h2>{{.Name}}</h2>
+        <p class="one">Year Created: {{.CreationDate}}</p>
+        <p class="two">First Album: {{.FirstAlbum}}</p>
+      </div>
+    </div>
+  </a>
+  {{end}}
+</div>
+<div class="pagination">
+  {{range .Pages}}
+  <a href="/?page={{.}}" {{if eq . $.CurrentPage}}class="active"{{end}}>{{.}}</a>
+  {{end}}
+</div>
+<footer>
+  <div class="footer-content">
+    <h3><a href="/">Groupie Tracker</a></h3>
+    <p>This Groupie Tracker project was developed by us!</p>
+      <ul class="socials">
+        <li><a href="https://learn.01founders.co/git/leokelly">LEO</a></li>
+        <li><a href="https://learn.01founders.co/git/cmcintos">CHIA</a></li>
+        <li><a href="https://learn.01founders.co/git/codedByRay">RAY</a></li>
+      </ul>
+  </div>
+  <div class="footer-bottom">
+      <p>© 2024 Groupie Tracker, All Rights Reserved</p>
+  </div>
+</footer>
+</body>
+</html>

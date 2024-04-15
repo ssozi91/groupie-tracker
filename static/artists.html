@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <title>🎵🎤 {{.Name}}🎵</title>
+    <script>
+      var i = 0;
+      var titleText = ["🎵🎤 {{.Name}}🎵", "🎤🎵 {{.Name}}🎤", "🎵🎤 {{.Name}}🎵", "🎤🎵 {{.Name}}🎤"];
+      setInterval(function() {
+          document.title = titleText[i++ % titleText.length];
+      }, 1000);
+  </script>
+</head>
+<body>
+  <a href="/"><h1>Groupie Tracker</h1></a>
+<div class="artistcontainer">
+  <div class="artistcard">
+    <div class="card-image">
+      <img src="{{.Image}}" alt="{{.Name}}">
+    </div>
+    <div class="artistcardcontent">
+      <h1>{{.Name}}</h1>
+      <p class="cd">Year Created: {{.CreationDate}}</p>
+      <p class="fa">First Album: {{.FirstAlbum}}</p>
+      <ul class="members">
+        <p class="membertitle">Members</p>
+        {{range .Members}}
+        <li class="memberslist">{{.}}</li>
+        {{end}}
+      </ul>
+      {{range $key, $value := .Relation.DatesLocations}}
+      <div class="datelocation">
+        <span class="location">{{$key}}</span>
+        <ul class="dates">
+          {{range $value}}
+          <li class="date">{{.}}</li>
+          {{end}}
+        </ul>
+      </div>
+      {{end}}
+    </div>
+  </div>
+</div>
+<button onclick="history.back()">Go Back</button>
+<footer>
+  <div class="footer-content">
+    <h3><a href="/">Groupie Tracker</a></h3>
+      <p class="three">This Groupie Tracker project was developed by us!</p>
+      <ul class="socials">
+          <li><a href="https://learn.01founders.co/git/leokelly">LEO</a></li>
+          <li><a href="https://learn.01founders.co/git/cmcintos">CHIA</a></li>
+          <li><a href="https://learn.01founders.co/git/codedByRay">RAY</a></li>
+      </ul>
+  </div>
+  <div class="footer-bottom">
+      <p class="four">© 2024 Groupie Tracker, All Rights Reserved</p>
+  </div>
+</footer>
+</body>
+</html>
