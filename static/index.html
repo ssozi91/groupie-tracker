@@ -6,10 +6,18 @@
 </head>
 <body>
   <a href="/"><h1>Groupie Tracker</h1></a>
-<form action="/" method="get" class="search-form">
-  <input type="text" name="search" placeholder="Search for an artist...">
-  <input type="submit" value="Search">
-</form>
+<div class="form-container">
+  <div class="wrapper">
+    <form action="/" method="get" class="search-form">
+      <input type="text" name="search" placeholder="Search for an artist..." autocomplete="chrome-off" id="search">
+      <input type="submit" value="Search">
+    </form>
+    <div class="results">
+    <ul>
+    </ul>
+    </div>
+  </div>
+</div>
 <div class="container">
   {{range .Artists}}
   <a href="/artists/{{.Id}}" class="card-link">
@@ -45,5 +53,97 @@
       <p>© 2024 Groupie Tracker, All Rights Reserved</p>
   </div>
 </footer>
+<script>
+  const searchInput = document.getElementById('search');
+  const searchWrapper = document.querySelector('.wrapper');
+  const resultsWrapper = document.querySelector('.results');
+
+  searchInput.addEventListener('keyup', () => {
+    let results = [];
+    let input = searchInput.value;
+    if (input.length) {
+      fetch('/search?query=' + encodeURIComponent(input))
+        .then(response => response.json())
+        .then(data => {
+          data.forEach((item) => {
+            if (item.name.toLowerCase().includes(input.toLowerCase())) {
+              results.push({name: item.name, id: item.id});
+            }
+            item.members.forEach((member) => {
+              if (member.toLowerCase().includes(input.toLowerCase())) {
+                results.push({name: member, id: item.id});
+              }
+            });
+            if (item.creationDate.toString().includes(input)) {
+              results.push({name: item.creationDate, id: item.id});
+            }
+            if (item.firstAlbum.includes(input)) {
+              results.push({name: item.firstAlbum, id: item.id});
+            }
+            Object.entries(item.relations.datesLocations).forEach(([location, dates]) => {
+              if (location.toLowerCase().includes(input.toLowerCase())) {
+                results.push({name: location, id: item.id});
+              }
+              dates.forEach((date) => {
+                if (date.includes(input)) {
+                  results.push({name: date, id: item.id});
+                }
+              });
+            });
+          });
+          renderResults(results);
+        });
+    } else {
+      renderResults(results);
+    }
+  });
+
+  function renderResults(results) {
+    if (results.length > 0) {
+      searchWrapper.classList.add('show');
+    } else {
+      searchWrapper.classList.remove('show');
+    }
+
+    // Slice the results array to the first 20 items
+    const slicedResults = results.slice(0, 50);
+
+    const content = slicedResults
+      .map((item) => {
+        // Check if item.name is not empty
+        if (item.name) {
+          // Use the item's name to create a link to the root
+          return `<li><a href="/?search=${encodeURIComponent(item.name)}">${item.name}</a></li>`;
+        }
+      })
+      .join('');
+
+    searchWrapper.classList.add('show');
+    resultsWrapper.innerHTML = `<ul>${content}</ul>`;
+
+    // Add the event listener to the links in the search results
+    document.querySelectorAll('.results li a').forEach(item => {
+      item.addEventListener('click', event => {
+        // prevent the default action
+        event.preventDefault();
+        // get the item's name
+        const itemName = item.textContent;
+
+        // set the search input value to the clicked item's name
+        searchInput.value = itemName;
+
+        // trigger the keyup event on the search input to initiate the search
+        const eventKeyUp = new Event('keyup');
+        searchInput.dispatchEvent(eventKeyUp);
+      });
+    });
+     // Calculate the height of the results container dynamically
+    const itemHeight = 30; // Height of each list item
+    const maxHeight = 200; // Maximum height for the container
+    const containerHeight = Math.min(results.length * itemHeight, maxHeight);
+    resultsWrapper.style.height = containerHeight + 'px';
+    resultsWrapper.style.overflowY = 'auto';
+  }
+</script>
 </body>
 </html>

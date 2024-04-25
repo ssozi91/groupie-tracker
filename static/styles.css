@@ -1,45 +1,9 @@
- body{
+body{
   background-color: #2B2D42;
   position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-.search-form {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #f8f9fa;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.search-form:hover{
-  box-shadow: 2px 6px 5px 3px #5ba1b3;
-}
-
-.search-form input[type="text"] {
-  border: none;
-  padding: 5px;
-  margin-right: 10px;
-  border-radius: 3px;
-}
-
-.search-form input[type="submit"] {
-  border: none;
-  background-color: #007bff;
-  color: white;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 3px;
-  transition: background-color 0.3s ease;
-}
-
-.search-form input[type="submit"]:hover {
-  background-color: #0056b3;
-  transform: scale(1.1);
 }
 
 .container {
@@ -338,3 +302,118 @@ h3 {
   color: #333;
 }
 
+.search-form {
+  position: relative;
+  top: 10px;
+  right: 10px;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 280px; /* Add a fixed width */
+  margin-left: 10px;
+}
+
+.search-form:hover{
+  box-shadow: 2px 6px 5px 3px #5ba1b3;
+}
+
+.search-form input[type="text"] {
+  border: none;
+  padding: 5px;
+  margin-right: 20px;
+  border-radius: 3px;
+  width: 170px;
+}
+
+.search-form input[type="submit"] {
+  border: none;
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+
+.search-form input[type="submit"]:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.wrapper {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  position: absolute;
+  top: 5px;
+  right: 0px;  
+  padding: 5px;
+}
+
+.results ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 10px; /* Remove padding */
+  margin: 0; /* Remove margin */
+}
+
+.results ul li {
+  padding: 5px; /* Add some padding */
+  border-bottom: 1px solid #ddd; /* Add a bottom border */
+}
+
+.results ul li:last-child {
+  border-bottom: none; /* Remove bottom border for the last item */
+}
+
+.show .results ul li {
+  opacity: 1;
+  display: block;
+  color: white;
+}
+
+.show .results {
+  padding: 10px;
+}
+
+/* Styles for the search wrapper when it's visible */
+.show {
+  display: block;
+  background-color: #2B2D42;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: 300px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for the list of search results */
+.show ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Styles for each search result */
+.show ul li {
+  padding: 10px 0;
+  border-bottom: 1px solid #d8bebe;
+}
+
+.show ul li:last-child {
+  border-bottom: none;
+}
+
+.show ul li:hover {
+  transform: scale(1.1);
+}
+/* Styles for the search result links */
+.show ul li a {
+  color: #f3f3f3;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* Styles for the search result links when hovered over */
+.show ul li a:hover {
+  color: #007BFF;
+  text-decoration: none;
+}
